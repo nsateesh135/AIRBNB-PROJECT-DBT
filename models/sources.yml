@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: airbnb
+    schema: raw
+    tables:
+      - name: listings
+        identifier: raw_listings
+
+      - name: hosts
+        identifier: raw_hosts
+
+      - name: reviews
+        identifier: raw_reviews
+        loaded_at_field: date
+        freshness:
+          warn_after: {count: 1, period: hour}
+          error_after: {count: 24, period: hour}
+
+# Use this file to provide meta data information about sources like schema name,table name etc
+# name : namespace for a datawarehouse (can contain many datasets)
+# schema : dataset name
+# tables : name : name going to be used, identifier - actual table name
+
+# To monitor fresheness in source tables use freshness parameter:
+# 1. loaded_at_filed = date/timestamp when data is loaded
+# 2. warn_after =  provides warning message
+# 3. error_after = provides error message 
+
+# Use dbt source refreshness command 
